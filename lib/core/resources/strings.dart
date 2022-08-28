@@ -1,0 +1,13 @@
+const kInvalidCredentials = "invalid credentials";
+const kUnknownError = "unknown error";
+const kEmailAlreadyInUse = "email already in use";
+const kRegisterWords = "Hi, we glad you will be join";
+const kLoginWords = "Hi, we missed you!";
+const kAlreadyHaveAnAccount = "Already have an account? ";
+const kDontHaveAnAccount = "Don't have an account? ";
+const kRegisterHere = "Register Here";
+const kLoginHere = "Login Here";
+const kUnexpectedError = "Unexpected Error Occured";
+const kRegisterSuccess = "Register success";
+const kLoginSuccess = "Login success";
+const kLogoutSuccess = "Logout success";
