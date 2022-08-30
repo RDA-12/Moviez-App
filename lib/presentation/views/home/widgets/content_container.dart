@@ -12,7 +12,7 @@ class ContentContainer extends StatelessWidget {
         color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(15),
       ),
-      height: 200,
+      height: 250,
       padding: const EdgeInsets.all(12),
       child: content,
     );

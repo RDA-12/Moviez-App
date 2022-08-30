@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entity/movie.dart';
+import '../../../routes/routes.gr.dart';
 import '../../widgets/vertical_space.dart';
 import 'custom_network_image.dart';
 
@@ -29,7 +31,12 @@ class MovieList extends StatelessWidget {
                 color: Colors.transparent,
                 type: MaterialType.button,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.router.push(SeeAllRoute(
+                      movies: movies,
+                      title: title,
+                    ));
+                  },
                   child: const Text("See All"),
                 ),
               )
@@ -42,9 +49,12 @@ class MovieList extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: movies.length > 5 ? 5 : movies.length,
             itemBuilder: (_, index) {
-              return Card(
-                child: CustomNetworkImage(
-                  imageUrl: movies[index].image,
+              return AspectRatio(
+                aspectRatio: 9 / 16,
+                child: Card(
+                  child: CustomNetworkImage(
+                    imageUrl: movies[index].image,
+                  ),
                 ),
               );
             },

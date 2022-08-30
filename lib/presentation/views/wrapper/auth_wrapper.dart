@@ -29,7 +29,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
         if (state is Authenticated) {
           context.router.replaceAll([const HomeRoute()]);
         } else if (state is UnAuthenticated) {
-          context.router.replaceAll([const HomeWrapper()]);
+          context.router.replaceAll([const DashboardWrapper()]);
         } else {
           context.router.replaceAll([
             ErrorRoute(message: kUnexpectedError),
