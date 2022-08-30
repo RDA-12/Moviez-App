@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                         ..showSnackBar(const SnackBar(
                           content: Text(kLoginSuccess),
                         ));
-                      context.router.replaceAll([const HomeRoute()]);
+                      context.router.replaceAll([const HomeWrapper()]);
                     }
                     if (state is AuthenticationError) {
                       ScaffoldMessenger.of(context)

@@ -24,7 +24,7 @@ class AuthRepoImpl implements AuthRepo {
       if ((e.code == 'user-not-found') || (e.code == 'wrong-password')) {
         throw kInvalidCredentials;
       }
-    } on Exception catch (e) {
+    } on Exception {
       throw kUnknownError;
     }
   }
@@ -51,7 +51,7 @@ class AuthRepoImpl implements AuthRepo {
       if (e.code == 'email-already-in-use') {
         throw kEmailAlreadyInUse;
       }
-    } on Exception catch (e) {
+    } on Exception {
       throw kUnknownError;
     }
   }
