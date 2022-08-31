@@ -5,9 +5,11 @@ class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     Key? key,
     required this.imageUrl,
+    this.fit = BoxFit.cover,
   }) : super(key: key);
 
   final String imageUrl;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,8 @@ class CustomNetworkImage extends StatelessWidget {
       errorWidget: (_, __, ___) => const Center(
         child: Icon(Icons.error_outline),
       ),
-      fit: BoxFit.cover,
+      fit: fit,
+      alignment: Alignment.topCenter,
     );
   }
 }

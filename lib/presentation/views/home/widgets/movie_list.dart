@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:moviez_app/presentation/views/home/widgets/interactive_card.dart';
 
 import '../../../../domain/entity/movie.dart';
 import '../../../routes/routes.gr.dart';
@@ -28,8 +29,7 @@ class MovieList extends StatelessWidget {
             ),
             if (movies.length > 5)
               Material(
-                color: Colors.transparent,
-                type: MaterialType.button,
+                type: MaterialType.transparency,
                 child: InkWell(
                   onTap: () {
                     context.router.push(SeeAllRoute(
@@ -51,7 +51,15 @@ class MovieList extends StatelessWidget {
             itemBuilder: (_, index) {
               return AspectRatio(
                 aspectRatio: 9 / 16,
-                child: Card(
+                child: InteractiveCard(
+                  onTap: () {
+                    context.router.push(
+                      MovieDetailRoute(movieId: movies[index].id),
+                    );
+                  },
+                  onLongPress: () {
+                    // TODO: show bottomsheet
+                  },
                   child: CustomNetworkImage(
                     imageUrl: movies[index].image,
                   ),

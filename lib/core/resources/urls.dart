@@ -14,16 +14,16 @@ class Urls {
     return "$_baseUrl/MostPopularMovies/$_imdbAPIKey";
   }
 
-  String getComingSoonMoviesUrl() {
-    return "$_baseUrl/ComingSoon/$_imdbAPIKey";
-  }
-
   String getBoxOfficeMoviesUrl() {
     return "$_baseUrl/BoxOffice/$_imdbAPIKey";
   }
 
   String getMovieDetailUrl(String movieId) {
     return "$_baseUrl/Title/$_imdbAPIKey/$movieId";
+  }
+
+  String getMovieTrailerUrl(String movieId) {
+    return "$_baseUrl/YouTubeTrailer/$_imdbAPIKey/$movieId";
   }
 }
 

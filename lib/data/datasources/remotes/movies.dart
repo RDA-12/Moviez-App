@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/error_handler/remote_error_handler.dart';
 import '../../../core/resources/urls.dart';
+import '../../models/movie_detail_model.dart';
 import '../../models/movie_model.dart';
 
 abstract class RemoteMoviesDataSource {
@@ -9,7 +10,7 @@ abstract class RemoteMoviesDataSource {
   Future<List<MovieModel>> getPopularMovies();
   Future<List<MovieModel>> getInTheatersMovies();
   Future<List<MovieModel>> getBoxOfficeMovies();
-  Future<MovieModel> getMovieDetail(String movieId);
+  Future<MovieDetailModel> getMovieDetail(String movieId);
 }
 
 class ImdbAPI implements RemoteMoviesDataSource {
@@ -31,13 +32,22 @@ class ImdbAPI implements RemoteMoviesDataSource {
   }
 
   @override
-  Future<MovieModel> getMovieDetail(String movieId) async {
-    // // TODO: implement getMovieDetail
-    // throw UnimplementedError();
-    return const MovieModel(
-      id: "id",
-      image: "image",
-    );
+  Future<MovieDetailModel> getMovieDetail(String movieId) async {
+    try {
+      final Response movieResponse = await dio.get(
+        urls.getMovieDetailUrl(movieId),
+      );
+      final Response trailerResponse = await dio.get(
+        urls.getMovieTrailerUrl(movieId),
+      );
+      final MovieDetailModel movie = MovieDetailModel.fromJson(
+        json: movieResponse.data,
+        youtubeId: trailerResponse.data["videoId"],
+      );
+      return movie;
+    } on Exception catch (e) {
+      throw remoteErrorHandler(e);
+    }
   }
 
   @override

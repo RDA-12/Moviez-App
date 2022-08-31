@@ -1,4 +1,5 @@
 import '../../domain/entity/movie.dart';
+import '../../domain/entity/movie_detail.dart';
 import '../../domain/repositories/movies_repo.dart';
 import '../datasources/remotes/movies.dart';
 
@@ -16,7 +17,7 @@ class MovieRepoImpl implements MovieRepo {
   }
 
   @override
-  Future<Movie> getMovieDetail(String movieId) async {
+  Future<MovieDetail> getMovieDetail(String movieId) async {
     try {
       return await remoteDatasource.getMovieDetail(movieId);
     } catch (e) {

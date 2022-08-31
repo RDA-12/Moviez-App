@@ -1,16 +1,17 @@
 import 'package:auto_route/annotations.dart';
-import 'package:moviez_app/presentation/views/error/error_page.dart';
-import 'package:moviez_app/presentation/views/favorite/pages/favorite_page.dart';
-import 'package:moviez_app/presentation/views/home/pages/see_all_page.dart';
-import 'package:moviez_app/presentation/views/news/pages/news_page.dart';
-import 'package:moviez_app/presentation/views/settings/pages/settings_page.dart';
-import 'package:moviez_app/presentation/views/wrapper/auth_wrapper.dart';
-import 'package:moviez_app/presentation/views/wrapper/dashboard_wrapper.dart';
-import 'package:moviez_app/presentation/views/wrapper/home_wrapper.dart';
 
 import '../views/auth/pages/login_page.dart';
 import '../views/auth/pages/register_page.dart';
+import '../views/error/error_page.dart';
+import '../views/favorite/pages/favorite_page.dart';
 import '../views/home/pages/home_page.dart';
+import '../views/home/pages/see_all_page.dart';
+import '../views/movie_detail/pages/movie_detail_page.dart';
+import '../views/news/pages/news_page.dart';
+import '../views/settings/pages/settings_page.dart';
+import '../views/wrapper/auth_wrapper.dart';
+import '../views/wrapper/dashboard_wrapper.dart';
+import '../views/wrapper/home_wrapper.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -64,6 +65,10 @@ import '../views/home/pages/home_page.dart';
           page: SettingsPage,
         ),
       ],
+    ),
+    AutoRoute(
+      path: "movieDetail",
+      page: MovieDetailPage,
     ),
   ],
 )

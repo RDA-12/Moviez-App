@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../core/usecases/usecase.dart';
-import '../../entity/movie.dart';
+import '../../entity/movie_detail.dart';
 import '../../repositories/movies_repo.dart';
 
-class GetMovieDetailUseCase implements UseCase<Movie, Params> {
+class GetMovieDetailUseCase implements UseCase<MovieDetail, Params> {
   final MovieRepo repo;
   GetMovieDetailUseCase(this.repo);
 
   @override
-  Future<Movie> call(Params params) async {
+  Future<MovieDetail> call(Params params) async {
     try {
       return await repo.getMovieDetail(params.movieId);
     } catch (e) {

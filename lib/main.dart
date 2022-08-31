@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviez_app/domain/usecases/movies/get_movie_detail_usecase.dart';
+import 'package:moviez_app/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/datasources/local/shared_pref.dart';
@@ -58,6 +60,7 @@ class _MyAppState extends State<MyApp> {
   late final GetPopularMoviesUseCase getPopularMoviesUseCase;
   late final GetInTheaterMoviesUseCase getInTheaterMoviesUseCase;
   late final GetBoxOfficeMoviesUseCase getBoxOfficeMoviesUseCase;
+  late final GetMovieDetailUseCase getMovieDetailUseCase;
 
   late final AuthRepoImpl authRepo;
   late final MovieRepoImpl movieRepo;
@@ -70,6 +73,7 @@ class _MyAppState extends State<MyApp> {
   late final PopularMoviesBloc popularMoviesBloc;
   late final InTheaterMoviesBloc inTheaterMoviesBloc;
   late final BoxOfficeMoviesBloc boxOfficeMoviesBloc;
+  late final MovieDetailBloc movieDetailBloc;
 
   late final SharedPreferences sharedPreferences;
   late final FirebaseAuth firebaseAuth;
@@ -97,6 +101,7 @@ class _MyAppState extends State<MyApp> {
     getPopularMoviesUseCase = GetPopularMoviesUseCase(movieRepo);
     getInTheaterMoviesUseCase = GetInTheaterMoviesUseCase(movieRepo);
     getBoxOfficeMoviesUseCase = GetBoxOfficeMoviesUseCase(movieRepo);
+    getMovieDetailUseCase = GetMovieDetailUseCase(movieRepo);
     authBloc = AuthBloc(
       loginUseCase: loginUseCase,
       registerUseCase: registerUseCase,
@@ -107,6 +112,7 @@ class _MyAppState extends State<MyApp> {
     popularMoviesBloc = PopularMoviesBloc(getPopularMoviesUseCase);
     inTheaterMoviesBloc = InTheaterMoviesBloc(getInTheaterMoviesUseCase);
     boxOfficeMoviesBloc = BoxOfficeMoviesBloc(getBoxOfficeMoviesUseCase);
+    movieDetailBloc = MovieDetailBloc(getMovieDetailUseCase);
   }
 
   @override
@@ -118,6 +124,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => popularMoviesBloc),
         BlocProvider(create: (_) => inTheaterMoviesBloc),
         BlocProvider(create: (_) => boxOfficeMoviesBloc),
+        BlocProvider(create: (_) => movieDetailBloc),
       ],
       child: MaterialApp.router(
         theme: AppTheme.light(),
