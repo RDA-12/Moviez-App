@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviez_app/presentation/views/movie_detail/widgets/rating_card.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/resources/strings.dart';
 import '../../../../domain/entity/movie_detail.dart';
 import '../../../bloc/movie_detail/movie_detail_bloc.dart';
-import '../../home/widgets/custom_network_image.dart';
-import '../../home/widgets/interactive_card.dart';
+import '../../widgets/custom_network_image.dart';
+import '../../widgets/movie_list.dart';
 import '../../widgets/vertical_space.dart';
-import '../widgets/info_card.dart';
+import '../widgets/content_holder.dart';
+import '../widgets/custom_scrollable_sheet.dart';
+import '../widgets/movie_data_list.dart';
+import '../widgets/trailer_thumbnail.dart';
 
 class MovieDetailPage extends StatefulWidget {
   const MovieDetailPage({Key? key, required this.movieId}) : super(key: key);
@@ -66,115 +70,72 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   ),
                 ),
                 Positioned.fill(
-                  child: DraggableScrollableSheet(
-                    maxChildSize: 0.9,
-                    builder: (_, scrollController) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.background,
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(25),
+                  child: CustomScrollableSheet(
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: RatingCard(rating: movie.imDbRating),
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.favorite_border_rounded),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.watch_later_outlined),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        const VerticalSpace(height: 12),
+                        ContentHolder(
+                          title: movie.title,
+                          content: Text(
+                            movie.plot,
+                            textAlign: TextAlign.justify,
+                            style: Theme.of(context).textTheme.caption,
                           ),
                         ),
-                        padding: const EdgeInsets.all(12),
-                        child: SingleChildScrollView(
-                          controller: scrollController,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(movie.imDbRating),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.favorite),
-                                    onPressed: () {},
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.watch_later),
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                              const VerticalSpace(height: 12),
-                              Text(
-                                movie.title,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const VerticalSpace(height: 5),
-                              Text(
-                                movie.plot,
-                                textAlign: TextAlign.justify,
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                              const VerticalSpace(height: 12),
-                              SizedBox(
-                                height: 100,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    InfoCard(
-                                      title: "duration",
-                                      data: movie.runtime,
-                                      icon: Icons.restore,
-                                    ),
-                                    InfoCard(
-                                      title: "release year",
-                                      data: movie.year,
-                                      icon: Icons.calendar_month_rounded,
-                                    ),
-                                    InfoCard(
-                                      title: "accessibility",
-                                      data: movie.contentRating,
-                                      icon: Icons.lock_person_rounded,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const VerticalSpace(height: 12),
-                              const Text("Trailer"),
-                              const VerticalSpace(height: 5),
-                              AspectRatio(
-                                aspectRatio: 16 / 9,
-                                child: Stack(
-                                  children: [
-                                    Positioned.fill(
-                                      child: InteractiveCard(
-                                        child: CustomNetworkImage(
-                                          fit: BoxFit.fill,
-                                          imageUrl: getThumbnail(
-                                            movie.youtubeId,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          youtubePlayerController =
-                                              YoutubePlayerController(
-                                            initialVideoId: movie.youtubeId,
-                                          );
-                                          _showPlayer(
-                                            context: context,
-                                            ctrl: youtubePlayerController,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Align(
-                                      child: Icon(
-                                        Icons.play_circle_fill_rounded,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                        const VerticalSpace(height: 12),
+                        MovieDataList(
+                          runtime: movie.runtime,
+                          releaseYear: movie.year,
+                          contentRating: movie.contentRating,
+                        ),
+                        const VerticalSpace(height: 12),
+                        ContentHolder(
+                          title: "Trailer",
+                          content: TrailerThumbnail(
+                            youtubeId: movie.youtubeId,
+                            onTap: () {
+                              youtubePlayerController = YoutubePlayerController(
+                                initialVideoId: movie.youtubeId,
+                              );
+                              _showPlayer(
+                                context: context,
+                                ctrl: youtubePlayerController,
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
+                        const VerticalSpace(height: 12),
+                        ContentHolder(
+                          title: "Simillar Movies",
+                          content: SizedBox(
+                            height: 200,
+                            child: MovieList(
+                              movies: movie.similarMovies,
+                              replacePage: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -186,10 +147,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         },
       ),
     );
-  }
-
-  String getThumbnail(String id) {
-    return "https://img.youtube.com/vi/$id/0.jpg";
   }
 
   void _showPlayer({

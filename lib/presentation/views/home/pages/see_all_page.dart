@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:moviez_app/presentation/routes/routes.gr.dart';
 
 import '../../../../domain/entity/movie.dart';
+import '../../../routes/routes.gr.dart';
+import '../../widgets/custom_network_image.dart';
+import '../../widgets/interactive_card.dart';
 import '../../widgets/vertical_space.dart';
-import '../widgets/custom_network_image.dart';
-import '../widgets/interactive_card.dart';
 
 class SeeAllPage extends StatelessWidget {
   const SeeAllPage({

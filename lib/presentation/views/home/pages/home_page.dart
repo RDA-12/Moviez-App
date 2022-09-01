@@ -9,7 +9,7 @@ import '../../../bloc/popular_movies/popular_movies_bloc.dart';
 import '../../../bloc/top_movies/top_movies_bloc.dart';
 import '../../widgets/vertical_space.dart';
 import '../widgets/content_container.dart';
-import '../widgets/movie_list.dart';
+import '../widgets/movie_list_holder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,12 +44,19 @@ class _HomePageState extends State<HomePage> {
               }
               if (state is InTheaterMoviesLoadingError) {
                 return Center(
-                  child: Text(state.msg),
+                  child: IconButton(
+                    icon: const Icon(Icons.restart_alt_rounded),
+                    onPressed: () {
+                      context
+                          .read<InTheaterMoviesBloc>()
+                          .add(GetInTheaterMovies());
+                    },
+                  ),
                 );
               }
               if (state is InTheaterMoviesLoaded) {
                 final List<Movie> movies = state.movies;
-                return MovieList(
+                return MovieListHolder(
                   movies: movies,
                   title: kNowPlaying,
                 );
@@ -72,12 +79,17 @@ class _HomePageState extends State<HomePage> {
               }
               if (state is PopularMoviesLoadingError) {
                 return Center(
-                  child: Text(state.msg),
+                  child: IconButton(
+                    icon: const Icon(Icons.restart_alt_rounded),
+                    onPressed: () {
+                      context.read<PopularMoviesBloc>().add(GetPopularMovies());
+                    },
+                  ),
                 );
               }
               if (state is PopularMoviesLoaded) {
                 final List<Movie> movies = state.movies;
-                return MovieList(
+                return MovieListHolder(
                   movies: movies,
                   title: kPopularMovies,
                 );
@@ -99,12 +111,17 @@ class _HomePageState extends State<HomePage> {
               }
               if (state is TopMoviesLoadingError) {
                 return Center(
-                  child: Text(state.msg),
+                  child: IconButton(
+                    icon: const Icon(Icons.restart_alt_rounded),
+                    onPressed: () {
+                      context.read<TopMoviesBloc>().add(GetTopMovies());
+                    },
+                  ),
                 );
               }
               if (state is TopMoviesLoaded) {
                 final List<Movie> movies = state.movies;
-                return MovieList(
+                return MovieListHolder(
                   movies: movies,
                   title: kTopMovies,
                 );
@@ -127,12 +144,19 @@ class _HomePageState extends State<HomePage> {
               }
               if (state is BoxOfficeMoviesLoadingError) {
                 return Center(
-                  child: Text(state.msg),
+                  child: IconButton(
+                    icon: const Icon(Icons.restart_alt_rounded),
+                    onPressed: () {
+                      context
+                          .read<BoxOfficeMoviesBloc>()
+                          .add(GetBoxOfficeMovies());
+                    },
+                  ),
                 );
               }
               if (state is BoxOfficeMoviesLoaded) {
                 final List<Movie> movies = state.movies;
-                return MovieList(
+                return MovieListHolder(
                   movies: movies,
                   title: kBoxOfficeMovies,
                 );

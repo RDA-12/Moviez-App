@@ -18,7 +18,6 @@ class AppTheme {
         behavior: SnackBarBehavior.floating,
       ),
       cardTheme: CardTheme(
-        elevation: 5,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
