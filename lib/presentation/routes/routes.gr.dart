@@ -60,7 +60,7 @@ class AppRouter extends _i13.RootStackRouter {
       final args = routeData.argsAs<MovieDetailRouteArgs>();
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i6.MovieDetailPage(key: args.key, movieId: args.movieId));
+          child: _i6.MovieDetailPage(key: args.key, movie: args.movie));
     },
     HomeWrapper.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
@@ -187,24 +187,24 @@ class DashboardWrapper extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.MovieDetailPage]
 class MovieDetailRoute extends _i13.PageRouteInfo<MovieDetailRouteArgs> {
-  MovieDetailRoute({_i14.Key? key, required String movieId})
+  MovieDetailRoute({_i14.Key? key, required _i15.Movie movie})
       : super(MovieDetailRoute.name,
             path: 'movieDetail',
-            args: MovieDetailRouteArgs(key: key, movieId: movieId));
+            args: MovieDetailRouteArgs(key: key, movie: movie));
 
   static const String name = 'MovieDetailRoute';
 }
 
 class MovieDetailRouteArgs {
-  const MovieDetailRouteArgs({this.key, required this.movieId});
+  const MovieDetailRouteArgs({this.key, required this.movie});
 
   final _i14.Key? key;
 
-  final String movieId;
+  final _i15.Movie movie;
 
   @override
   String toString() {
-    return 'MovieDetailRouteArgs{key: $key, movieId: $movieId}';
+    return 'MovieDetailRouteArgs{key: $key, movie: $movie}';
   }
 }
 

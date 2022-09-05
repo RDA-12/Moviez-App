@@ -27,9 +27,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (_, state) {
         if (state is Authenticated) {
-          context.router.replaceAll([const HomeRoute()]);
-        } else if (state is UnAuthenticated) {
           context.router.replaceAll([const DashboardWrapper()]);
+        } else if (state is UnAuthenticated) {
+          context.router.replaceAll([const LoginRoute()]);
         } else {
           context.router.replaceAll([
             ErrorRoute(message: kUnexpectedError),

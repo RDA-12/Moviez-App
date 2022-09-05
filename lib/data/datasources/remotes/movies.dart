@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/error_handler/remote_error_handler.dart';
+import '../../../core/error_handler/dio_error_handler.dart';
 import '../../../core/resources/urls.dart';
 import '../../models/movie_detail_model.dart';
 import '../../models/movie_model.dart';
@@ -13,9 +13,9 @@ abstract class RemoteMoviesDataSource {
   Future<MovieDetailModel> getMovieDetail(String movieId);
 }
 
-class ImdbAPI implements RemoteMoviesDataSource {
+class ImdbAPIDataSource implements RemoteMoviesDataSource {
   final Dio dio;
-  ImdbAPI(this.dio);
+  ImdbAPIDataSource(this.dio);
 
   @override
   Future<List<MovieModel>> getBoxOfficeMovies() async {
@@ -27,7 +27,7 @@ class ImdbAPI implements RemoteMoviesDataSource {
       }
       return movies;
     } on Exception catch (e) {
-      throw remoteErrorHandler(e);
+      throw dioErrorHandler(e);
     }
   }
 
@@ -46,7 +46,7 @@ class ImdbAPI implements RemoteMoviesDataSource {
       );
       return movie;
     } on Exception catch (e) {
-      throw remoteErrorHandler(e);
+      throw dioErrorHandler(e);
     }
   }
 
@@ -60,7 +60,7 @@ class ImdbAPI implements RemoteMoviesDataSource {
       }
       return movies;
     } on Exception catch (e) {
-      throw remoteErrorHandler(e);
+      throw dioErrorHandler(e);
     }
   }
 
@@ -74,7 +74,7 @@ class ImdbAPI implements RemoteMoviesDataSource {
       }
       return movies;
     } on Exception catch (e) {
-      throw remoteErrorHandler(e);
+      throw dioErrorHandler(e);
     }
   }
 
@@ -88,7 +88,7 @@ class ImdbAPI implements RemoteMoviesDataSource {
       }
       return movies;
     } on Exception catch (e) {
-      throw remoteErrorHandler(e);
+      throw dioErrorHandler(e);
     }
   }
 }

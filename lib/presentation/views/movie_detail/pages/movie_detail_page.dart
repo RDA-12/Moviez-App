@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviez_app/presentation/views/movie_detail/widgets/rating_card.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/resources/strings.dart';
+import '../../../../domain/entity/movie.dart';
 import '../../../../domain/entity/movie_detail.dart';
+import '../../../bloc/favorite_movies/favorite_movies_bloc.dart';
 import '../../../bloc/movie_detail/movie_detail_bloc.dart';
+import '../../../bloc/watchlist_movies/watchlist_movies_bloc.dart';
 import '../../widgets/custom_network_image.dart';
 import '../../widgets/movie_list.dart';
 import '../../widgets/vertical_space.dart';
 import '../widgets/content_holder.dart';
 import '../widgets/custom_scrollable_sheet.dart';
 import '../widgets/movie_data_list.dart';
+import '../widgets/rating_card.dart';
 import '../widgets/trailer_thumbnail.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  const MovieDetailPage({Key? key, required this.movieId}) : super(key: key);
+  const MovieDetailPage({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
 
-  final String movieId;
+  final Movie movie;
 
   @override
   State<MovieDetailPage> createState() => _MovieDetailPageState();
@@ -29,7 +35,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   void initState() {
     super.initState();
-    context.read<MovieDetailBloc>().add(GetMovieDetail(widget.movieId));
+    context.read<MovieDetailBloc>().add(GetMovieDetail(widget.movie.id));
+    context.read<FavoriteMoviesBloc>().add(GetAllFavoriteMovies());
+    context.read<WatchlistMoviesBloc>().add(GetAllWatchlistMovies());
   }
 
   @override
@@ -61,12 +69,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             );
           }
           if (state is MovieDetailLoaded) {
-            final MovieDetail movie = state.movie;
+            final MovieDetail movieDetail = state.movie;
             return Stack(
               children: [
                 Positioned.fill(
                   child: CustomNetworkImage(
-                    imageUrl: movie.image,
+                    imageUrl: movieDetail.image,
                   ),
                 ),
                 Positioned.fill(
@@ -79,42 +87,96 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: RatingCard(rating: movie.imDbRating),
+                                child: RatingCard(
+                                  rating: movieDetail.imDbRating,
+                                ),
                               ),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.favorite_border_rounded),
-                              onPressed: () {},
+                            BlocBuilder<FavoriteMoviesBloc,
+                                FavoriteMoviesState>(
+                              builder: (context, state) {
+                                if (state is FavoriteMoviesLoaded) {
+                                  final List<Movie> favMovies = state.movies;
+                                  return IconButton(
+                                    icon: favMovies.any(
+                                      (e) => e.id == widget.movie.id,
+                                    )
+                                        ? const Icon(Icons.favorite)
+                                        : const Icon(
+                                            Icons.favorite_border_rounded),
+                                    onPressed: () {
+                                      favMovies.any(
+                                        (e) => e.id == widget.movie.id,
+                                      )
+                                          ? context
+                                              .read<FavoriteMoviesBloc>()
+                                              .add(DeleteFavoriteMovie(
+                                                  widget.movie))
+                                          : context
+                                              .read<FavoriteMoviesBloc>()
+                                              .add(AddFavoriteMovie(
+                                                  widget.movie));
+                                    },
+                                  );
+                                }
+                                return const SizedBox();
+                              },
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.watch_later_outlined),
-                              onPressed: () {},
+                            BlocBuilder<WatchlistMoviesBloc,
+                                WatchlistMoviesState>(
+                              builder: (context, state) {
+                                if (state is WatchlistMoviesLoaded) {
+                                  final List<Movie> watMovies = state.movies;
+                                  return IconButton(
+                                    icon: watMovies.any(
+                                      (e) => e.id == widget.movie.id,
+                                    )
+                                        ? const Icon(Icons.watch_later)
+                                        : const Icon(
+                                            Icons.watch_later_outlined),
+                                    onPressed: () {
+                                      watMovies.any(
+                                        (e) => e.id == widget.movie.id,
+                                      )
+                                          ? context
+                                              .read<WatchlistMoviesBloc>()
+                                              .add(DeleteWatchlistMovie(
+                                                  widget.movie))
+                                          : context
+                                              .read<WatchlistMoviesBloc>()
+                                              .add(AddWatchlistMovie(
+                                                  widget.movie));
+                                    },
+                                  );
+                                }
+                                return const SizedBox();
+                              },
                             ),
                           ],
                         ),
                         const VerticalSpace(height: 12),
                         ContentHolder(
-                          title: movie.title,
+                          title: movieDetail.title,
                           content: Text(
-                            movie.plot,
+                            movieDetail.plot,
                             textAlign: TextAlign.justify,
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ),
                         const VerticalSpace(height: 12),
                         MovieDataList(
-                          runtime: movie.runtime,
-                          releaseYear: movie.year,
-                          contentRating: movie.contentRating,
+                          runtime: movieDetail.runtime,
+                          releaseYear: movieDetail.year,
+                          contentRating: movieDetail.contentRating,
                         ),
                         const VerticalSpace(height: 12),
                         ContentHolder(
                           title: "Trailer",
                           content: TrailerThumbnail(
-                            youtubeId: movie.youtubeId,
+                            youtubeId: movieDetail.youtubeId,
                             onTap: () {
                               youtubePlayerController = YoutubePlayerController(
-                                initialVideoId: movie.youtubeId,
+                                initialVideoId: movieDetail.youtubeId,
                               );
                               _showPlayer(
                                 context: context,
@@ -129,7 +191,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                           content: SizedBox(
                             height: 200,
                             child: MovieList(
-                              movies: movie.similarMovies,
+                              movies: movieDetail.similarMovies,
                               replacePage: true,
                             ),
                           ),
