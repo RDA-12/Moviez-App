@@ -7,14 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'data/datasources/local/shared_pref.dart';
 import 'data/datasources/remotes/favorite_movies.dart';
 import 'data/datasources/remotes/movies.dart';
+import 'data/datasources/remotes/news.dart';
 import 'data/datasources/remotes/watchlist_movies.dart';
 import 'data/repositories/auth_repo_impl.dart';
 import 'data/repositories/favorite_movies_repo_impl.dart';
 import 'data/repositories/movie_repo_impl.dart';
+import 'data/repositories/news_repo_impl.dart';
 import 'data/repositories/watchlist_movies_repo_impl.dart';
 import 'domain/repositories/auth_repo.dart';
 import 'domain/repositories/favorite_movies_repo.dart';
 import 'domain/repositories/movies_repo.dart';
+import 'domain/repositories/news_repo.dart';
 import 'domain/repositories/watchlist_movies_repo.dart';
 import 'domain/usecases/auth/login_check_usecase.dart';
 import 'domain/usecases/auth/login_usecase.dart';
@@ -28,6 +31,7 @@ import 'domain/usecases/movies/get_in_theater_movies_usecase.dart';
 import 'domain/usecases/movies/get_movie_detail_usecase.dart';
 import 'domain/usecases/movies/get_popular_movies_usecase.dart';
 import 'domain/usecases/movies/get_top_movies_usecase.dart';
+import 'domain/usecases/news/get_news_usecase.dart';
 import 'domain/usecases/watchlist_movies/add_watchlist_movie_usecase.dart';
 import 'domain/usecases/watchlist_movies/delete_watchlist_movie_usecase.dart';
 import 'domain/usecases/watchlist_movies/get_all_watchlist_movies_usecase.dart';
@@ -67,6 +71,7 @@ Future<void> init() async {
       deleteWatchlistMovieUseCase: getIt(),
     ),
   );
+  getIt.registerFactory<NewsBloc>(() => NewsBloc(getIt()));
 
   // Repo
   getIt.registerLazySingleton<AuthRepo>(
@@ -84,6 +89,9 @@ Future<void> init() async {
   getIt.registerLazySingleton<WatchlistMoviesRepo>(
     () => WatchlistMoviesRepoImpl(getIt()),
   );
+  getIt.registerLazySingleton<NewsRepo>(
+    () => NewsRepoImpl(getIt()),
+  );
 
   // datasource
   getIt.registerLazySingleton<RemoteMoviesDataSource>(
@@ -97,6 +105,9 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<WatchlistMoviesDataSource>(
     () => FirestoreWatchlist(firestore: getIt(), firebaseAuth: getIt()),
+  );
+  getIt.registerLazySingleton<NewsRemoteDataSource>(
+    () => NewsAPI(getIt()),
   );
 
   // external
@@ -146,5 +157,8 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<DeleteWatchlistMovieUseCase>(
     () => DeleteWatchlistMovieUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<GetNewsUseCase>(
+    () => GetNewsUseCase(getIt()),
   );
 }

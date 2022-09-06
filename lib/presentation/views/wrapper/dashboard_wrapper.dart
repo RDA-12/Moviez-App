@@ -12,7 +12,7 @@ class DashboardWrapper extends StatelessWidget {
         routes: const [
           HomeWrapper(),
           FavoriteRoute(),
-          NewsRoute(),
+          NewsWrapper(),
           SettingsRoute(),
         ],
         appBarBuilder: (_, tabsRouter) {

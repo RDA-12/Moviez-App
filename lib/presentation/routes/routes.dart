@@ -1,4 +1,6 @@
 import 'package:auto_route/annotations.dart';
+import 'package:moviez_app/presentation/views/news/pages/news_detail_page.dart';
+import 'package:moviez_app/presentation/views/wrapper/news_wrapper.dart';
 
 import '../views/auth/pages/login_page.dart';
 import '../views/auth/pages/register_page.dart';
@@ -57,8 +59,19 @@ import '../views/wrapper/home_wrapper.dart';
           page: FavoritePage,
         ),
         AutoRoute(
-          path: "news",
-          page: NewsPage,
+          path: "newsWrapper",
+          page: NewsWrapper,
+          children: [
+            AutoRoute(
+              path: "news",
+              page: NewsPage,
+              initial: true,
+            ),
+            AutoRoute(
+              path: "newsDetail",
+              page: NewsDetailPage,
+            )
+          ],
         ),
         AutoRoute(
           path: "settings",

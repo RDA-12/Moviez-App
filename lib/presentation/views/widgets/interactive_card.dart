@@ -5,12 +5,14 @@ class InteractiveCard extends StatelessWidget {
     Key? key,
     this.onTap,
     this.onLongPress,
+    this.color,
     required this.child,
   }) : super(key: key);
 
   final Function()? onTap;
   final Function()? onLongPress;
   final Widget child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class InteractiveCard extends StatelessWidget {
         onTap: onTap,
         onLongPress: onLongPress,
         child: Card(
+          color: color,
           child: child,
         ),
       ),

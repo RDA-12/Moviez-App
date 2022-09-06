@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.getIt<MovieDetailBloc>()),
         BlocProvider(create: (_) => di.getIt<FavoriteMoviesBloc>()),
         BlocProvider(create: (_) => di.getIt<WatchlistMoviesBloc>()),
+        BlocProvider(create: (_) => di.getIt<NewsBloc>()),
       ],
       child: MaterialApp.router(
         theme: AppTheme.light(),
