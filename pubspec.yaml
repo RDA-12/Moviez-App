@@ -17,11 +17,14 @@ dependencies:
   equatable: ^2.0.5
   firebase_auth: ^3.6.4
   firebase_core: ^1.21.0
+  firebase_storage: ^10.3.7
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
   get_it: ^7.2.0
   google_fonts: ^3.0.1
+  image_picker: ^0.8.5+3
+  path: ^1.8.2
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.4
   youtube_player_flutter: ^8.1.0

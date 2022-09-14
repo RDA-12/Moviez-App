@@ -1,7 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moviez_app/data/datasources/remotes/users.dart';
+import 'package:moviez_app/data/repositories/user_repo_impl.dart';
+import 'package:moviez_app/domain/repositories/user_repo.dart';
+import 'package:moviez_app/domain/usecases/users/delete_user_usecase.dart';
+import 'package:moviez_app/domain/usecases/users/get_user_usecase.dart';
+import 'package:moviez_app/domain/usecases/users/update_user_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/datasources/local/shared_pref.dart';
@@ -71,7 +78,19 @@ Future<void> init() async {
       deleteWatchlistMovieUseCase: getIt(),
     ),
   );
-  getIt.registerFactory<NewsBloc>(() => NewsBloc(getIt()));
+  getIt.registerFactory<NewsBloc>(
+    () => NewsBloc(getIt()),
+  );
+  getIt.registerFactory<UserBloc>(
+    () => UserBloc(
+      getUserUseCase: getIt(),
+      updateUserUseCase: getIt(),
+      deleteUserUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory<ThemeBloc>(
+    () => ThemeBloc(),
+  );
 
   // Repo
   getIt.registerLazySingleton<AuthRepo>(
@@ -92,6 +111,9 @@ Future<void> init() async {
   getIt.registerLazySingleton<NewsRepo>(
     () => NewsRepoImpl(getIt()),
   );
+  getIt.registerLazySingleton<UserRepo>(
+    () => UserRepoImpl(getIt()),
+  );
 
   // datasource
   getIt.registerLazySingleton<RemoteMoviesDataSource>(
@@ -109,22 +131,43 @@ Future<void> init() async {
   getIt.registerLazySingleton<NewsRemoteDataSource>(
     () => NewsAPI(getIt()),
   );
+  getIt.registerLazySingleton<UserRemoteDataSource>(
+    () => FirebaseUser(firebaseAuth: getIt(), firebaseStorage: getIt()),
+  );
 
   // external
   final SharedPreferences sharedPref = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton<SharedPreferences>(() => sharedPref);
-  getIt.registerLazySingleton<AppRouter>(() => AppRouter());
-  getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  getIt.registerLazySingleton<SharedPreferences>(
+    () => sharedPref,
+  );
+  getIt.registerLazySingleton<AppRouter>(
+    () => AppRouter(),
+  );
+  getIt.registerLazySingleton<FirebaseAuth>(
+    () => FirebaseAuth.instance,
+  );
   getIt.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
-  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<Dio>(
+    () => Dio(),
+  );
+  getIt.registerLazySingleton<FirebaseStorage>(
+    () => FirebaseStorage.instance,
+  );
 
   // usecases
-  getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()));
-  getIt.registerLazySingleton<LogOutUseCase>(() => LogOutUseCase(getIt()));
-  getIt.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(getIt()));
+  getIt.registerLazySingleton<LoginUseCase>(
+    () => LoginUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<LogOutUseCase>(
+    () => LogOutUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<RegisterUseCase>(
+    () => RegisterUseCase(getIt()),
+  );
   getIt.registerLazySingleton<LoginCheckUseCase>(
-      () => LoginCheckUseCase(getIt()));
+    () => LoginCheckUseCase(getIt()),
+  );
   getIt.registerLazySingleton<GetTopMoviesUseCase>(
     () => GetTopMoviesUseCase(getIt()),
   );
@@ -160,5 +203,14 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<GetNewsUseCase>(
     () => GetNewsUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<GetUserUseCase>(
+    () => GetUserUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<UpdateUserUseCase>(
+    () => UpdateUserUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<DeleteUserUseCase>(
+    () => DeleteUserUseCase(getIt()),
   );
 }

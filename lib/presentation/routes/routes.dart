@@ -1,6 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:moviez_app/presentation/views/news/pages/news_detail_page.dart';
+import 'package:moviez_app/presentation/views/settings/pages/profile_page.dart';
+import 'package:moviez_app/presentation/views/watchlist/pages/watchlist_page.dart';
 import 'package:moviez_app/presentation/views/wrapper/news_wrapper.dart';
+import 'package:moviez_app/presentation/views/wrapper/settings_wrapper.dart';
 
 import '../views/auth/pages/login_page.dart';
 import '../views/auth/pages/register_page.dart';
@@ -74,8 +77,19 @@ import '../views/wrapper/home_wrapper.dart';
           ],
         ),
         AutoRoute(
-          path: "settings",
-          page: SettingsPage,
+          path: "settingsWrapper",
+          page: SettingsWrapper,
+          children: [
+            AutoRoute(
+              path: "settings",
+              page: SettingsPage,
+              initial: true,
+            ),
+            AutoRoute(
+              path: "profile",
+              page: ProfilePage,
+            )
+          ],
         ),
       ],
     ),
@@ -83,6 +97,14 @@ import '../views/wrapper/home_wrapper.dart';
       path: "movieDetail",
       page: MovieDetailPage,
     ),
+    AutoRoute(
+      path: "favorite",
+      page: FavoritePage,
+    ),
+    AutoRoute(
+      path: "watchlist",
+      page: WatchlistPage,
+    )
   ],
 )
 class $AppRouter {}

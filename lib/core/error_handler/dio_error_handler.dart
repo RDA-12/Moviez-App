@@ -10,5 +10,5 @@ String dioErrorHandler(Exception e) {
       return kServerError;
     }
   }
-  return kUnknownError;
+  return kUnexpectedError;
 }

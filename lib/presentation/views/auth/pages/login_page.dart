@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/resources/strings.dart';
 import '../../../bloc/auth/auth_bloc.dart';
 import '../../../routes/routes.gr.dart';
+import '../../widgets/custom_eleveted_button.dart';
 import '../../widgets/vertical_space.dart';
 import '../widgets/email_input.dart';
 import '../widgets/password_input.dart';
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Login",
+                kLogin,
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               Text(
@@ -60,47 +61,46 @@ class _LoginPageState extends State<LoginPage> {
               const VerticalSpace(height: 10),
               PasswordInput(controller: pwdCtrl),
               const VerticalSpace(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    if (state is Authenticating) {
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(const SnackBar(
-                          content: Text("Loading ..."),
-                        ));
-                    }
-                    if (state is Authenticated) {
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(const SnackBar(
-                          content: Text(kLoginSuccess),
-                        ));
-                      context.router.replaceAll([const DashboardWrapper()]);
-                    }
-                    if (state is AuthenticationError) {
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(SnackBar(
-                          content: Text(state.msg),
-                        ));
-                    }
-                  },
-                  child: ElevatedButton(
-                    child: const Text("Login"),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        final String email = emailCtrl.text;
-                        final String password = pwdCtrl.text;
-                        context.read<AuthBloc>().add(Login(
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is Authenticating) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(const SnackBar(
+                        content: Text("Loading ..."),
+                      ));
+                  }
+                  if (state is Authenticated) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(const SnackBar(
+                        content: Text(kLoginSuccess),
+                      ));
+                    context.router.replaceAll([const DashboardWrapper()]);
+                  }
+                  if (state is AuthenticationError) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(SnackBar(
+                        content: Text(state.msg),
+                      ));
+                  }
+                },
+                child: CustomElevetedButton(
+                  content: const Text(kLogin),
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      final String email = emailCtrl.text;
+                      final String password = pwdCtrl.text;
+                      context.read<AuthBloc>().add(
+                            Login(
                               email: email,
                               password: password,
-                            ));
-                      }
-                    },
-                  ),
+                            ),
+                          );
+                    }
+                  },
                 ),
               ),
               const VerticalSpace(height: 18),

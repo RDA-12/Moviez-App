@@ -33,11 +33,17 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.getIt<FavoriteMoviesBloc>()),
         BlocProvider(create: (_) => di.getIt<WatchlistMoviesBloc>()),
         BlocProvider(create: (_) => di.getIt<NewsBloc>()),
+        BlocProvider(create: (_) => di.getIt<UserBloc>()),
+        BlocProvider(create: (_) => di.getIt<ThemeBloc>()),
       ],
-      child: MaterialApp.router(
-        theme: AppTheme.light(),
-        routerDelegate: di.getIt<AppRouter>().delegate(),
-        routeInformationParser: di.getIt<AppRouter>().defaultRouteParser(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            theme: AppTheme.theme(isDark: state.isDark),
+            routerDelegate: di.getIt<AppRouter>().delegate(),
+            routeInformationParser: di.getIt<AppRouter>().defaultRouteParser(),
+          );
+        },
       ),
     );
   }

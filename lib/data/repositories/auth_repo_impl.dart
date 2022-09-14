@@ -25,7 +25,7 @@ class AuthRepoImpl implements AuthRepo {
         throw kInvalidCredentials;
       }
     } on Exception {
-      throw kUnknownError;
+      throw kUnexpectedError;
     }
   }
 
@@ -35,7 +35,7 @@ class AuthRepoImpl implements AuthRepo {
       await firebaseAuth.signOut();
       await localDatasource.clear();
     } catch (e) {
-      throw kUnknownError;
+      throw kUnexpectedError;
     }
   }
 
@@ -52,7 +52,7 @@ class AuthRepoImpl implements AuthRepo {
         throw kEmailAlreadyInUse;
       }
     } on Exception {
-      throw kUnknownError;
+      throw kUnexpectedError;
     }
   }
 

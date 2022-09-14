@@ -1,9 +1,10 @@
 const kInvalidCredentials = "invalid credentials";
-const kUnknownError = "unknown error";
 const kUnexpectedError = "unexpected error occured";
 const kEmailAlreadyInUse = "email already in use";
 const kConnectionTimeout = "connection timeout, please check your connection";
 const kServerError = "server error, please try again later";
+const kReLoginPlease = "operation failed, please re-login";
+const kUpdateFailed = "update failed";
 
 const kRegisterWords = "Hi, we glad you will be join";
 const kLoginWords = "Hi, we missed you!";
@@ -30,7 +31,15 @@ const kMovieSuccessfullyDeletedFromFavorite =
 const kMovieSuccessfullyDeletedFromWatchlist =
     "Movie successfully deleted from watchlist";
 const kYouDontHaveFavoriteMovies = "You don't have any favorite movies yet";
+const kYouDontHaveWatchlistMovies = "You don't have any watchlist movies yet";
+const kRegister = "Register";
+const kLogin = "Login";
+const kLogOut = "Log Out";
+const kDeleteAccount = "Delete Account";
+const kUserDeletedSuccessfully = "user deleted successfully";
+const kSave = "Save";
 
 const kRegisterSuccess = "Register success";
 const kLoginSuccess = "Login success";
 const kLogoutSuccess = "Logout success";
+const kUpdateSuccess = "update success";

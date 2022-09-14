@@ -7,3 +7,5 @@ export 'popular_movies/popular_movies_bloc.dart';
 export 'top_movies/top_movies_bloc.dart';
 export 'watchlist_movies/watchlist_movies_bloc.dart';
 export 'news/news_bloc.dart';
+export 'user/user_bloc.dart';
+export 'theme/theme_bloc.dart';

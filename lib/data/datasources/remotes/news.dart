@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/resources/strings.dart';
 import '../../../core/resources/urls.dart';
-import '../../models/news.dart';
+import '../../models/news_model.dart';
 
 abstract class NewsRemoteDataSource {
   Future<List<NewsModel>> getNews(String page);

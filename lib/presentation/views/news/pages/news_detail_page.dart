@@ -22,11 +22,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: WebView(
-          initialUrl: widget.url,
-        ),
+      body: WebView(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        initialUrl: widget.url,
       ),
     );
   }
