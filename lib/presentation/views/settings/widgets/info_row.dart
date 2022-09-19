@@ -26,7 +26,12 @@ class InfoRow extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 80,
-                    child: Text(title),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: TextFormField(

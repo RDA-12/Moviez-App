@@ -1,9 +1,8 @@
 class Urls {
-  // TODO: use dart-define
   final String _imdbApiBaseUrl = "https://imdb-api.com/en/API";
   final String _newsApiBaseUrl = "https://newsapi.org/v2/everything";
-  final String _imdbAPIKey = "k_jbtwakqc";
-  final String _newsAPIKey = "67b2949c77c541659723b81292d29882";
+  final String _imdbAPIKey = const String.fromEnvironment("imdbAPIKey");
+  final String _newsAPIKey = const String.fromEnvironment("newsAPIKey");
 
   String getTopMoviesUrl() {
     return "$_imdbApiBaseUrl/Top250Movies/$_imdbAPIKey";

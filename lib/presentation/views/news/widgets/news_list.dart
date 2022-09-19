@@ -36,13 +36,21 @@ class NewsList extends StatelessWidget {
                   news[i].title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
                 ),
                 const VerticalSpace(height: 5),
                 Text(
                   news[i].description,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.caption?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSecondary
+                            .withOpacity(0.7),
+                      ),
                 ),
               ],
             ),

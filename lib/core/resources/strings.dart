@@ -38,6 +38,7 @@ const kLogOut = "Log Out";
 const kDeleteAccount = "Delete Account";
 const kUserDeletedSuccessfully = "user deleted successfully";
 const kSave = "Save";
+const kDataUnavailable = "Data Unavailable";
 
 const kRegisterSuccess = "Register success";
 const kLoginSuccess = "Login success";

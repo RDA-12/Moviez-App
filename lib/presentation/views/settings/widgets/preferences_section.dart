@@ -29,6 +29,10 @@ class PreferencesSection extends StatelessWidget {
                     "Dark Mode",
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           fontSize: 14,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(0.7),
                         ),
                   ),
                 ),

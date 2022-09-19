@@ -24,7 +24,12 @@ class MovieListHolder extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Text(title),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+              ),
             ),
             if (movies.length > 5)
               Material(
@@ -35,7 +40,12 @@ class MovieListHolder extends StatelessWidget {
                       SeeAllRoute(movies: movies, title: title),
                     );
                   },
-                  child: const Text("See All"),
+                  child: Text(
+                    "See All",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
                 ),
               ),
           ],

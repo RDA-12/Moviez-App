@@ -67,7 +67,13 @@ class _FavoritePageState extends State<FavoritePage> {
                     inFavorite: true,
                     inWatchlist: false,
                   )
-                : const Center(child: Text(kYouDontHaveFavoriteMovies));
+                : Center(
+                    child: Text(
+                    kYouDontHaveFavoriteMovies,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ));
           }
           return const Center(
             child: Text(kUnexpectedError),

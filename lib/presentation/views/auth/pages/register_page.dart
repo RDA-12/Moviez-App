@@ -50,11 +50,18 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Text(
                 kRegister,
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.5),
+                    ),
               ),
               Text(
                 kRegisterWords,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
               ),
               const VerticalSpace(height: 18),
               EmailInput(controller: emailCtrl),
@@ -105,7 +112,12 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(kAlreadyHaveAnAccount),
+                  Text(
+                    kAlreadyHaveAnAccount,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
                   GestureDetector(
                     child: Text(
                       kLoginHere,

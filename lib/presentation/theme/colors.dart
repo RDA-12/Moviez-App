@@ -32,7 +32,7 @@ class LightColor implements AppColor {
   @override
   Color get secondaryContainer => const Color.fromARGB(255, 54, 130, 142);
   @override
-  Color get onSecondary => Colors.white;
+  Color get onSecondary => Colors.black;
   @override
   Color get surface => Colors.white;
   @override
@@ -47,7 +47,7 @@ class LightColor implements AppColor {
 
 class DarkColor implements AppColor {
   @override
-  Color get background => const Color.fromRGBO(43, 72, 101, 1);
+  Color get background => const Color.fromARGB(255, 45, 84, 123);
   @override
   Color get onBackground => Colors.white;
   @override
@@ -57,13 +57,13 @@ class DarkColor implements AppColor {
   @override
   Color get onPrimary => Colors.white;
   @override
-  Color get secondary => const Color.fromRGBO(143, 227, 207, 1);
+  Color get secondary => const Color.fromRGBO(28, 12, 91, 1);
   @override
-  Color get secondaryContainer => const Color.fromARGB(255, 75, 114, 105);
+  Color get secondaryContainer => const Color.fromARGB(255, 109, 10, 162);
   @override
   Color get onSecondary => Colors.white;
   @override
-  Color get surface => Colors.black38;
+  Color get surface => const Color.fromARGB(255, 0, 148, 162);
   @override
   Color get onSurface => Colors.white;
   @override

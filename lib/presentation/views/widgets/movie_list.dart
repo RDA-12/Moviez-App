@@ -22,36 +22,45 @@ class MovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      itemCount: movies.length > 5 ? 5 : movies.length,
-      itemBuilder: (_, index) {
-        return AspectRatio(
-          aspectRatio: 9 / 16,
-          child: InteractiveCard(
-            onTap: () {
-              replacePage
-                  ? context.router.popAndPush(
-                      MovieDetailRoute(movie: movies[index]),
-                    )
-                  : context.router.push(
-                      MovieDetailRoute(movie: movies[index]),
+    return movies.isNotEmpty
+        ? ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: movies.length > 5 ? 5 : movies.length,
+            itemBuilder: (_, index) {
+              return AspectRatio(
+                aspectRatio: 9 / 16,
+                child: InteractiveCard(
+                  onTap: () {
+                    replacePage
+                        ? context.router.popAndPush(
+                            MovieDetailRoute(movie: movies[index]),
+                          )
+                        : context.router.push(
+                            MovieDetailRoute(movie: movies[index]),
+                          );
+                  },
+                  onLongPress: () {
+                    _showBottomSheet(
+                      context: context,
+                      movie: movies[index],
                     );
-            },
-            onLongPress: () {
-              _showBottomSheet(
-                context: context,
-                movie: movies[index],
+                  },
+                  child: CustomNetworkImage(
+                    imageUrl: movies[index].image,
+                  ),
+                ),
               );
             },
-            child: CustomNetworkImage(
-              imageUrl: movies[index].image,
+          )
+        : Center(
+            child: Text(
+              kDataUnavailable,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
             ),
-          ),
-        );
-      },
-    );
+          );
   }
 
   void _showBottomSheet({

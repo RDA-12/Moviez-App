@@ -50,11 +50,18 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 kLogin,
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.5),
+                    ),
               ),
               Text(
                 kLoginWords,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
               ),
               const VerticalSpace(height: 18),
               EmailInput(controller: emailCtrl),
@@ -107,7 +114,12 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(kDontHaveAnAccount),
+                  Text(
+                    kDontHaveAnAccount,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
                   GestureDetector(
                     child: Text(
                       kRegisterHere,

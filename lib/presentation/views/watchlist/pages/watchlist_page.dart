@@ -65,8 +65,13 @@ class _WatchlistPageState extends State<WatchlistPage> {
                     inFavorite: false,
                     inWatchlist: true,
                   )
-                : const Center(
-                    child: Text(kYouDontHaveWatchlistMovies),
+                : Center(
+                    child: Text(
+                      kYouDontHaveWatchlistMovies,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
                   );
           }
           return const Center(

@@ -65,7 +65,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           }
           if (state is MovieDetailLoadingError) {
             return Center(
-              child: Text(state.msg),
+              child: Text(
+                state.msg,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
             );
           }
           if (state is MovieDetailLoaded) {
@@ -101,9 +106,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                     icon: favMovies.any(
                                       (e) => e.id == widget.movie.id,
                                     )
-                                        ? const Icon(Icons.favorite)
-                                        : const Icon(
-                                            Icons.favorite_border_rounded),
+                                        ? Icon(
+                                            Icons.favorite,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : Icon(
+                                            Icons.favorite_border_rounded,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
                                     onPressed: () {
                                       favMovies.any(
                                         (e) => e.id == widget.movie.id,
@@ -131,9 +145,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                     icon: watMovies.any(
                                       (e) => e.id == widget.movie.id,
                                     )
-                                        ? const Icon(Icons.watch_later)
-                                        : const Icon(
-                                            Icons.watch_later_outlined),
+                                        ? Icon(
+                                            Icons.watch_later,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : Icon(
+                                            Icons.watch_later_outlined,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
                                     onPressed: () {
                                       watMovies.any(
                                         (e) => e.id == widget.movie.id,
@@ -160,7 +183,13 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                           content: Text(
                             movieDetail.plot,
                             textAlign: TextAlign.justify,
-                            style: Theme.of(context).textTheme.caption,
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(0.7),
+                                    ),
                           ),
                         ),
                         const VerticalSpace(height: 12),

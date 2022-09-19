@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
+          context.read<ThemeBloc>().add(GetTheme());
           return MaterialApp.router(
             theme: AppTheme.theme(isDark: state.isDark),
             routerDelegate: di.getIt<AppRouter>().delegate(),

@@ -3,28 +3,27 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:moviez_app/data/datasources/remotes/users.dart';
-import 'package:moviez_app/data/repositories/user_repo_impl.dart';
-import 'package:moviez_app/domain/repositories/user_repo.dart';
-import 'package:moviez_app/domain/usecases/users/delete_user_usecase.dart';
-import 'package:moviez_app/domain/usecases/users/get_user_usecase.dart';
-import 'package:moviez_app/domain/usecases/users/update_user_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/datasources/local/shared_pref.dart';
 import 'data/datasources/remotes/favorite_movies.dart';
 import 'data/datasources/remotes/movies.dart';
 import 'data/datasources/remotes/news.dart';
+import 'data/datasources/remotes/users.dart';
 import 'data/datasources/remotes/watchlist_movies.dart';
 import 'data/repositories/auth_repo_impl.dart';
 import 'data/repositories/favorite_movies_repo_impl.dart';
 import 'data/repositories/movie_repo_impl.dart';
 import 'data/repositories/news_repo_impl.dart';
+import 'data/repositories/theme_repo_impl.dart';
+import 'data/repositories/user_repo_impl.dart';
 import 'data/repositories/watchlist_movies_repo_impl.dart';
 import 'domain/repositories/auth_repo.dart';
 import 'domain/repositories/favorite_movies_repo.dart';
 import 'domain/repositories/movies_repo.dart';
 import 'domain/repositories/news_repo.dart';
+import 'domain/repositories/theme_repo.dart';
+import 'domain/repositories/user_repo.dart';
 import 'domain/repositories/watchlist_movies_repo.dart';
 import 'domain/usecases/auth/login_check_usecase.dart';
 import 'domain/usecases/auth/login_usecase.dart';
@@ -39,6 +38,11 @@ import 'domain/usecases/movies/get_movie_detail_usecase.dart';
 import 'domain/usecases/movies/get_popular_movies_usecase.dart';
 import 'domain/usecases/movies/get_top_movies_usecase.dart';
 import 'domain/usecases/news/get_news_usecase.dart';
+import 'domain/usecases/theme/get_theme_usecase.dart';
+import 'domain/usecases/theme/set_theme_usecase.dart';
+import 'domain/usecases/users/delete_user_usecase.dart';
+import 'domain/usecases/users/get_user_usecase.dart';
+import 'domain/usecases/users/update_user_usecase.dart';
 import 'domain/usecases/watchlist_movies/add_watchlist_movie_usecase.dart';
 import 'domain/usecases/watchlist_movies/delete_watchlist_movie_usecase.dart';
 import 'domain/usecases/watchlist_movies/get_all_watchlist_movies_usecase.dart';
@@ -89,7 +93,10 @@ Future<void> init() async {
     ),
   );
   getIt.registerFactory<ThemeBloc>(
-    () => ThemeBloc(),
+    () => ThemeBloc(
+      getThemeUseCase: getIt(),
+      setThemeUseCase: getIt(),
+    ),
   );
 
   // Repo
@@ -113,6 +120,9 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<UserRepo>(
     () => UserRepoImpl(getIt()),
+  );
+  getIt.registerLazySingleton<ThemeRepo>(
+    () => ThemeRepoImpl(getIt()),
   );
 
   // datasource
@@ -212,5 +222,11 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<DeleteUserUseCase>(
     () => DeleteUserUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<GetThemeUseCase>(
+    () => GetThemeUseCase(getIt()),
+  );
+  getIt.registerLazySingleton<SetThemeUseCase>(
+    () => SetThemeUseCase(getIt()),
   );
 }

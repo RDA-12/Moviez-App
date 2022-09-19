@@ -14,7 +14,7 @@ class RatingCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        color: Theme.of(context).colorScheme.onBackground,
+        color: Theme.of(context).colorScheme.primary,
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Row(
@@ -22,13 +22,13 @@ class RatingCard extends StatelessWidget {
               Icon(
                 Icons.star,
                 size: 16,
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
               const HorizontalSpace(width: 5),
               Text(
                 rating,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ],

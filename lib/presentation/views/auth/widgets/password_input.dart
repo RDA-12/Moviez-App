@@ -34,6 +34,9 @@ class _PasswordInputState extends State<PasswordInput> {
       ),
       obscureText: !isVisible,
       keyboardType: TextInputType.visiblePassword,
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onBackground,
+      ),
     );
   }
 }

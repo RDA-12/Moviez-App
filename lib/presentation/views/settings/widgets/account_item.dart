@@ -23,12 +23,19 @@ class AccountItem extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           fontSize: 14,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(0.7),
                         ),
                   ),
                 ),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: Theme.of(context).textTheme.caption?.color,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.7),
                 ),
               ],
             ),

@@ -2,6 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocalDatasource {
   bool checkUser();
+  Future<void> setTheme({required bool isDark});
+  bool isDarkTheme();
   Future<void> setLogin();
   Future<void> clear();
 }
@@ -22,6 +24,16 @@ class SharedPrefDatasource implements LocalDatasource {
 
   @override
   Future<void> clear() async {
-    await sharedPreferences.clear();
+    await sharedPreferences.remove("isLogin");
+  }
+
+  @override
+  Future<void> setTheme({required bool isDark}) async {
+    await sharedPreferences.setBool("isDark", isDark);
+  }
+
+  @override
+  bool isDarkTheme() {
+    return sharedPreferences.getBool("isDark") ?? false;
   }
 }

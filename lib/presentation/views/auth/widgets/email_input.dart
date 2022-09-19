@@ -13,6 +13,9 @@ class EmailInput extends StatelessWidget {
         prefixIcon: Icon(Icons.email),
       ),
       keyboardType: TextInputType.emailAddress,
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onBackground,
+      ),
     );
   }
 }

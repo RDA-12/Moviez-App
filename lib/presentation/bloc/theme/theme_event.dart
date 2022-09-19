@@ -8,3 +8,5 @@ abstract class ThemeEvent extends Equatable {
 }
 
 class ToggleTheme extends ThemeEvent {}
+
+class GetTheme extends ThemeEvent {}

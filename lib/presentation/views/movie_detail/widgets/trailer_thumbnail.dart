@@ -34,7 +34,8 @@ class TrailerThumbnail extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.play_circle_fill_rounded),
               onPressed: onTap,
-              color: Theme.of(context).colorScheme.background,
+              iconSize: 32,
+              color: Theme.of(context).colorScheme.primary,
             ),
           )
         ],

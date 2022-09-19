@@ -22,7 +22,7 @@ class AppTheme {
     onError: lightColor.onError,
     brightness: lightColor.brightness,
   );
-  static ColorScheme dark = const ColorScheme.dark().copyWith(
+  static ColorScheme dark = ColorScheme.dark(
     background: darkColor.background,
     onBackground: darkColor.onBackground,
     primary: darkColor.primary,
@@ -41,6 +41,11 @@ class AppTheme {
   static ThemeData theme({required bool isDark}) {
     return ThemeData(
       colorScheme: isDark ? dark : light,
+      scaffoldBackgroundColor:
+          isDark ? darkColor.background : lightColor.background,
+      appBarTheme: AppBarTheme(
+        color: isDark ? darkColor.primary : lightColor.primary,
+      ),
       textTheme: GoogleFonts.lilitaOneTextTheme(),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
