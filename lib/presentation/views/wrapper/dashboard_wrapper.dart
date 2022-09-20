@@ -15,11 +15,6 @@ class DashboardWrapper extends StatelessWidget {
           const NewsWrapper(),
           const SettingsWrapper(),
         ],
-        appBarBuilder: (_, tabsRouter) {
-          return AppBar(
-            title: const Text("Moviezzz"),
-          );
-        },
         bottomNavigationBuilder: (_, tabsRouter) {
           return Theme(
             data: ThemeData(

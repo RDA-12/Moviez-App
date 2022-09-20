@@ -1,8 +1,10 @@
+import '../environment/env.dart';
+
 class Urls {
   final String _imdbApiBaseUrl = "https://imdb-api.com/en/API";
   final String _newsApiBaseUrl = "https://newsapi.org/v2/everything";
-  final String _imdbAPIKey = const String.fromEnvironment("imdbAPIKey");
-  final String _newsAPIKey = const String.fromEnvironment("newsAPIKey");
+  final String _imdbAPIKey = Env.imdbAPIKey;
+  final String _newsAPIKey = Env.newsAPIKey;
 
   String getTopMoviesUrl() {
     return "$_imdbApiBaseUrl/Top250Movies/$_imdbAPIKey";

@@ -26,7 +26,9 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.inHome ? null : AppBar(title: const Text("Favorites")),
+      appBar: AppBar(
+        title: Text(widget.inHome ? "Moviez" : "Favorites"),
+      ),
       body: BlocBuilder<FavoriteMoviesBloc, FavoriteMoviesState>(
         buildWhen: (_, currentState) {
           return (currentState is FavoriteMoviesLoaded ||

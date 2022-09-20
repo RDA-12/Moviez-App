@@ -15,49 +15,54 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const AccountSection(),
-            const VerticalSpace(height: 12),
-            const PreferencesSection(),
-            const VerticalSpace(height: 12),
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is Authenticating) {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(const SnackBar(
-                      content: Text("Loading ..."),
-                    ));
-                }
-                if (state is UnAuthenticated) {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(const SnackBar(
-                      content: Text(kLogoutSuccess),
-                    ));
-                  context.router.replaceAll([const LoginRoute()]);
-                }
-                if (state is AuthenticationError) {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(SnackBar(
-                      content: Text(state.msg),
-                    ));
-                }
-              },
-              child: CustomElevetedButton(
-                content: const Text(kLogOut),
-                onPressed: () {
-                  context.read<AuthBloc>().add(Logout());
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Moviez"),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const AccountSection(),
+              const VerticalSpace(height: 12),
+              const PreferencesSection(),
+              const VerticalSpace(height: 12),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is Authenticating) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(const SnackBar(
+                        content: Text("Loading ..."),
+                      ));
+                  }
+                  if (state is UnAuthenticated) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(const SnackBar(
+                        content: Text(kLogoutSuccess),
+                      ));
+                    context.router.replaceAll([const LoginRoute()]);
+                  }
+                  if (state is AuthenticationError) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(SnackBar(
+                        content: Text(state.msg),
+                      ));
+                  }
                 },
+                child: CustomElevetedButton(
+                  content: const Text(kLogOut),
+                  onPressed: () {
+                    context.read<AuthBloc>().add(Logout());
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
