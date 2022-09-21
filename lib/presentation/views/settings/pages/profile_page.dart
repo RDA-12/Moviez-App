@@ -140,13 +140,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       InfoRow(
                         title: "Password",
-                        data: "*********",
+                        data: "",
                         controller: passwordCtrl,
                       ),
                       const VerticalSpace(height: 12),
                       CustomElevetedButton(
                         content: const Text("Save"),
                         onPressed: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           if (usernameCtrl.text.isNotEmpty ||
                               emailCtrl.text.isNotEmpty ||
                               passwordCtrl.text.isNotEmpty ||

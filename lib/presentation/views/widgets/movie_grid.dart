@@ -61,6 +61,7 @@ class MovieGrid extends StatelessWidget {
   }) async {
     await showModalBottomSheet(
       enableDrag: false,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(15),

@@ -29,7 +29,15 @@ class Avatar extends StatelessWidget {
                 )
               : profileImgUrl != ""
                   ? CustomNetworkImage(imageUrl: profileImgUrl)
-                  : const Icon(Icons.person),
+                  : DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      child: Icon(
+                        Icons.person,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
         ),
       ),
     );

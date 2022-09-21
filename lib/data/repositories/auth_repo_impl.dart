@@ -43,10 +43,13 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> register(
       {required String email, required String password}) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      final UserCredential userCred =
+          await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      final User user = userCred.user!;
+      await user.updateDisplayName("user${user.uid.substring(0, 4)}");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw kEmailAlreadyInUse;

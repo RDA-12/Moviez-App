@@ -119,7 +119,7 @@ Future<void> init() async {
     () => NewsRepoImpl(getIt()),
   );
   getIt.registerLazySingleton<UserRepo>(
-    () => UserRepoImpl(getIt()),
+    () => UserRepoImpl(dataSource: getIt(), localDatasource: getIt()),
   );
   getIt.registerLazySingleton<ThemeRepo>(
     () => ThemeRepoImpl(getIt()),
